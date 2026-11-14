@@ -26,7 +26,7 @@ func TestStoreVersion(t *testing.T) {
 	assert.Equal(t, DefaultStoreVersion, storeVersion(), "when set to 0 we should get default value")
 	t.Setenv(envStoreVersion, "3")
 	assert.Equal(t, DefaultStoreVersion, storeVersion(), "when set to 3 we should get default value")
-	t.Setenv(envStoreVersion, "3")
+	t.Setenv(envStoreVersion, "two")
 	assert.Equal(t, DefaultStoreVersion, storeVersion(), "when set to anything we cannot convert to number we should get default value")
 }
 
