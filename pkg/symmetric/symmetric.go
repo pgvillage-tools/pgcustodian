@@ -58,7 +58,7 @@ func StreamEncrypt(key []byte, input *bufio.Reader, output *bufio.Writer) (int64
 	}
 }
 
-func EncryptToFile(key []byte, input *bufio.Reader, outFile string) (int64, error) {
+func EncryptToFile(key []byte, input *bufio.Reader, outFile string) (written int64, err error) {
 	out, err := os.Create(outFile)
 	if err != nil {
 		return 0, fmt.Errorf("failed to open output file %s: %w", outFile, err)
@@ -70,9 +70,10 @@ func EncryptToFile(key []byte, input *bufio.Reader, outFile string) (int64, erro
 		}
 	}()
 	buffer := bufio.NewWriter(out)
-	defer buffer.Flush()
-
-	return StreamEncrypt(key, input, buffer)
+	if written, err = StreamEncrypt(key, input, buffer); err != nil {
+		return written, err
+	}
+	return written, buffer.Flush()
 }
 
 // StreamDecrypt can be used to encrypt data from a stream and write output to a stream.
@@ -123,7 +124,7 @@ func Cycle(oldKey []byte, inFile string, newKey []byte, outFile string) error {
 	}
 	encryptResults := <-c
 	if encryptResults.err != nil {
-		return fmt.Errorf("error while encrypting: %w", err)
+		return fmt.Errorf("error while encrypting: %w", encryptResults.err)
 	}
 	if count != encryptResults.count {
 		return fmt.Errorf("%d was decrypted, but %d was encrypted", count, encryptResults.count)
@@ -132,7 +133,7 @@ func Cycle(oldKey []byte, inFile string, newKey []byte, outFile string) error {
 	return nil
 }
 
-func DecryptFromFile(key []byte, inFile string, output *bufio.Writer) (int64, error) {
+func DecryptFromFile(key []byte, inFile string, output *bufio.Writer) (read int64, err error) {
 	in, err := os.Open(inFile)
 	if err != nil {
 		return 0, fmt.Errorf("failed to open input file %s: %w", inFile, err)

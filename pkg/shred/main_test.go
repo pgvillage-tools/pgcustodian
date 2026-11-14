@@ -32,17 +32,13 @@ func generateTestSet(t *testing.T, dir string) (files Files) {
 }
 
 func TestTimes(t *testing.T) {
-	tmpDir, err := os.MkdirTemp("", "ShredTime")
-	if err != nil {
-		panic(fmt.Errorf("unable to create temp dir: %w", err))
-	}
-	defer os.RemoveAll(tmpDir)
+	tmpDir := t.TempDir()
 	files := generateTestSet(t, tmpDir)
 
 	conf := shred.Conf{}
 	assert.Error(t, conf.Path(path.Join(tmpDir, "not_existing")))
 
-	err = conf.Path(tmpDir)
+	err := conf.Path(tmpDir)
 	require.NoError(t, err, "conf.Path should succeed")
 	for filePath, contents := range files {
 		t.Logf("checking file %s", filePath)
@@ -72,15 +68,11 @@ func allZero(s []byte) bool {
 }
 
 func TestZeros(t *testing.T) {
-	tmpDir, err := os.MkdirTemp("", "ShredZeroes")
-	if err != nil {
-		panic(fmt.Errorf("unable to create temp dir: %w", err))
-	}
-	defer os.RemoveAll(tmpDir)
+	tmpDir := t.TempDir()
 	files := generateTestSet(t, tmpDir)
 
 	conf := shred.Conf{}
-	err = conf.Path(tmpDir)
+	err := conf.Path(tmpDir)
 	require.NoError(t, err, "conf.Path should succeed")
 	for filePath, contents := range files {
 		t.Logf("checking file %s", filePath)
@@ -102,15 +94,11 @@ func TestZeros(t *testing.T) {
 }
 
 func TestRemove(t *testing.T) {
-	tmpDir, err := os.MkdirTemp("", "ShredZeroes")
-	if err != nil {
-		panic(fmt.Errorf("unable to create temp dir: %w", err))
-	}
-	defer os.RemoveAll(tmpDir)
+	tmpDir := t.TempDir()
 	files := generateTestSet(t, tmpDir)
 
 	conf := shred.Conf{}
-	err = conf.Path(tmpDir)
+	err := conf.Path(tmpDir)
 	require.NoError(t, err, "conf.Path should succeed")
 	for filePath := range files {
 		t.Logf("checking file %s", filePath)
@@ -126,14 +114,11 @@ func TestRemove(t *testing.T) {
 }
 
 func TestSubDir(t *testing.T) {
-	tmpDir, err := os.MkdirTemp("", "ShredSubDir")
-	if err != nil {
-		panic(fmt.Errorf("unable to create temp dir: %w", err))
-	}
+	tmpDir := t.TempDir()
 	conf := shred.Conf{Remove: true}
 
 	unreachableDir := path.Join(tmpDir, "unreachable")
-	err = os.Mkdir(unreachableDir, 0o00)
+	err := os.Mkdir(unreachableDir, 0o00)
 	require.NoError(t, err)
 	err = conf.Path(tmpDir)
 	assert.Error(t, err)
@@ -154,15 +139,11 @@ func TestSubDir(t *testing.T) {
 	assert.NoDirExists(t, tmpDir)
 }
 func TestFile(t *testing.T) {
-	tmpDir, err := os.MkdirTemp("", "ShredFile")
-	if err != nil {
-		panic(fmt.Errorf("unable to create temp dir: %w", err))
-	}
-	defer os.RemoveAll(tmpDir)
+	tmpDir := t.TempDir()
 	files := generateTestSet(t, tmpDir)
 	conf := shred.Conf{Remove: true}
 	for filePath := range files {
-		err = conf.Path(filePath)
+		err := conf.Path(filePath)
 		require.NoError(t, err, "conf.File should succeed")
 		t.Logf("checking file %s", filePath)
 		assert.NoFileExists(t, filePath)
@@ -170,17 +151,9 @@ func TestFile(t *testing.T) {
 }
 
 func TestSymlink(t *testing.T) {
-	sourceTmpDir, err := os.MkdirTemp("", "shredSymlinkSource")
-	if err != nil {
-		panic(fmt.Errorf("unable to create temp dir: %w", err))
-	}
-	defer os.RemoveAll(sourceTmpDir)
+	sourceTmpDir := t.TempDir()
 
-	destTmpDir, err := os.MkdirTemp("", "shredSymlinkDest")
-	if err != nil {
-		panic(fmt.Errorf("unable to create temp dir: %w", err))
-	}
-	defer os.RemoveAll(destTmpDir)
+	destTmpDir := t.TempDir()
 
 	dstFiles := generateTestSet(t, destTmpDir)
 	var srcFiles = make(Files)
@@ -191,7 +164,7 @@ func TestSymlink(t *testing.T) {
 		srcFiles[srcPath] = contents
 	}
 
-	err = shred.Conf{Remove: true}.Path(sourceTmpDir)
+	err := shred.Conf{Remove: true}.Path(sourceTmpDir)
 	require.NoError(t, err, "conf.Path should succeed")
 	for filePath := range srcFiles {
 		t.Logf("checking file %s", filePath)

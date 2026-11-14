@@ -9,43 +9,24 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var preservedEnv map[string]string
-
-func setEnv(key string, value string) {
-	if preservedEnv == nil {
-		preservedEnv = make(map[string]string)
-	}
-	if _, exists := preservedEnv[key]; !exists {
-		preservedEnv[key] = os.Getenv(key)
-	}
-	os.Setenv(key, value)
-}
-
-func RestoreEnv() {
-	for key, value := range preservedEnv {
-		os.Setenv(key, value)
-	}
-}
-
 func TestStoreVersion(t *testing.T) {
 	const (
 		v1 uint8 = 1
 		v2 uint8 = 2
 	)
-	defer RestoreEnv()
-	setEnv(envStoreVersion, "")
+	t.Setenv(envStoreVersion, "")
 	assert.Equal(t, DefaultStoreVersion, storeVersion(), "when unset we should get the default version")
-	setEnv(envStoreVersion, "1")
+	t.Setenv(envStoreVersion, "1")
 	assert.Equal(t, v1, storeVersion(), "when set to 1 we should get 1")
-	setEnv(envStoreVersion, "0000001")
+	t.Setenv(envStoreVersion, "0000001")
 	assert.Equal(t, v1, storeVersion(), "when set to 0000001 we should get 1")
-	setEnv(envStoreVersion, "2")
+	t.Setenv(envStoreVersion, "2")
 	assert.Equal(t, v2, storeVersion(), "when set to 2 we should get 2")
-	setEnv(envStoreVersion, "0")
+	t.Setenv(envStoreVersion, "0")
 	assert.Equal(t, DefaultStoreVersion, storeVersion(), "when set to 0 we should get default value")
-	setEnv(envStoreVersion, "3")
+	t.Setenv(envStoreVersion, "3")
 	assert.Equal(t, DefaultStoreVersion, storeVersion(), "when set to 3 we should get default value")
-	setEnv(envStoreVersion, "3")
+	t.Setenv(envStoreVersion, "two")
 	assert.Equal(t, DefaultStoreVersion, storeVersion(), "when set to anything we cannot convert to number we should get default value")
 }
 
@@ -55,10 +36,9 @@ func TestNewClientFromEnv(t *testing.T) {
 		secretIdFile       = "/a/b/c/d"
 		storeVersion uint8 = 2
 	)
-	defer RestoreEnv()
-	setEnv(envRoleID, roleId)
-	setEnv(envSecretIDFile, secretIdFile)
-	setEnv(envStoreVersion, string(storeVersion))
+	t.Setenv(envRoleID, roleId)
+	t.Setenv(envSecretIDFile, secretIdFile)
+	t.Setenv(envStoreVersion, fmt.Sprint(storeVersion))
 	client := NewClient()
 	assert.Equal(t, roleId, client.RoleID, fmt.Sprintf("client.RoleID should default to %s", roleId))
 	assert.Equal(t, secretIdFile, client.SecretID.FromFile, fmt.Sprintf("client.SecretIDFile should default to %s", secretIdFile))
