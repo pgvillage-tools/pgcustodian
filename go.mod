@@ -1,6 +1,6 @@
-module mannemsolutions/pgcustodian
+module github.com/pgvillage-tools/pgcustodian
 
-go 1.24.0
+go 1.26.0
 
 require (
 	github.com/hashicorp/vault/api v1.23.0

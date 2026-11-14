@@ -4,8 +4,8 @@ import (
 	"os"
 	"testing"
 
-	passwordGen "mannemsolutions/pgcustodian/pkg/pwgen"
-	"mannemsolutions/pgcustodian/pkg/vault"
+	passwordGen "github.com/pgvillage-tools/pgcustodian/pkg/pwgen"
+	"github.com/pgvillage-tools/pgcustodian/pkg/vault"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

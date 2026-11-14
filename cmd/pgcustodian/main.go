@@ -3,7 +3,7 @@ package main
 // cobra and viper are used to create a uniform interface on CLI and configuration file.
 import (
 	"fmt"
-	"mannemsolutions/pgcustodian/internal"
+	"github.com/pgvillage-tools/pgcustodian/internal"
 	"os"
 	"strings"
 
@@ -59,7 +59,7 @@ func createApp() *cobra.Command {
 		pgcustodian can run with an AppRole, with shortlived / onetime tokens, which means that 
 		the vault credentials never reach Postgres, and that Postgres can only read TDE keys once (before starting).
 		
-		Complete documentation is available at https://github.com/mannemsolutions/pgcustodian/`,
+		Complete documentation is available at https://github.com/pgvillage-tools/pgcustodian/`,
 		RunE:              requireSubcommand,
 		CompletionOptions: cobra.CompletionOptions{},
 		TraverseChildren:  true,

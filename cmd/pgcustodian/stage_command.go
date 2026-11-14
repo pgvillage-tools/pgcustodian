@@ -1,7 +1,7 @@
 package main
 
 import (
-	"mannemsolutions/pgcustodian/pkg/utils"
+	"github.com/pgvillage-tools/pgcustodian/pkg/utils"
 	"os"
 	"path"
 

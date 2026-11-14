@@ -3,8 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"mannemsolutions/pgcustodian/pkg/asymmetric"
-	"mannemsolutions/pgcustodian/pkg/symmetric"
+	"github.com/pgvillage-tools/pgcustodian/pkg/asymmetric"
+	"github.com/pgvillage-tools/pgcustodian/pkg/symmetric"
 	"os"
 
 	"github.com/spf13/cobra"

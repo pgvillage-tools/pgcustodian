@@ -1,8 +1,8 @@
 package vault_test
 
 import (
-	passwordGen "mannemsolutions/pgcustodian/pkg/pwgen"
-	"mannemsolutions/pgcustodian/pkg/vault"
+	passwordGen "github.com/pgvillage-tools/pgcustodian/pkg/pwgen"
+	"github.com/pgvillage-tools/pgcustodian/pkg/vault"
 	"os"
 	"testing"
 

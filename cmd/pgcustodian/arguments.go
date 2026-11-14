@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	passwordGen "mannemsolutions/pgcustodian/pkg/pwgen"
-	"mannemsolutions/pgcustodian/pkg/symmetric"
-	"mannemsolutions/pgcustodian/pkg/utils"
-	"mannemsolutions/pgcustodian/pkg/vault"
+	passwordGen "github.com/pgvillage-tools/pgcustodian/pkg/pwgen"
+	"github.com/pgvillage-tools/pgcustodian/pkg/symmetric"
+	"github.com/pgvillage-tools/pgcustodian/pkg/utils"
+	"github.com/pgvillage-tools/pgcustodian/pkg/vault"
 	"os"
 	"path"
 	"regexp"

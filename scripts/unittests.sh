@@ -12,8 +12,9 @@ if [ "$(id -u)" -eq 0 ]; then
 	exit $?
 fi
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/.." || exit 1
 ./scripts/login
+# shellcheck source=/dev/null # bashrc only sets up the environment
 . ./scripts/bashrc
 unset VAULT_TOKEN
 export VAULT_TOKEN

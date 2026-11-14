@@ -1,10 +1,10 @@
 package main
 
 import (
-	"mannemsolutions/pgcustodian/pkg/asymmetric"
-	passwordGen "mannemsolutions/pgcustodian/pkg/pwgen"
-	"mannemsolutions/pgcustodian/pkg/shred"
-	"mannemsolutions/pgcustodian/pkg/symmetric"
+	"github.com/pgvillage-tools/pgcustodian/pkg/asymmetric"
+	passwordGen "github.com/pgvillage-tools/pgcustodian/pkg/pwgen"
+	"github.com/pgvillage-tools/pgcustodian/pkg/shred"
+	"github.com/pgvillage-tools/pgcustodian/pkg/symmetric"
 	"os"
 	"path"
 	"path/filepath"
