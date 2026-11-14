@@ -1,3 +1,5 @@
 cover.out
 vaultcreds/
 bin/
+# Files written to a literal ~ directory by local runs
+/~/

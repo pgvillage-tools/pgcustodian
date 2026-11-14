@@ -86,7 +86,7 @@ func Decrypt(key *rsa.PrivateKey, data []byte, label string) (decrypted []byte, 
 	}
 	decrypted, err = rsa.DecryptOAEP(sha256.New(), nil, key, data, []byte(label))
 	if err != nil {
-		return nil, fmt.Errorf("Error while decrypting data: %w", err)
+		return nil, fmt.Errorf("error while decrypting data: %w", err)
 	}
 	return decrypted, nil
 }

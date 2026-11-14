@@ -2,7 +2,6 @@ package asymmetric_test
 
 import (
 	"crypto/rsa"
-	"fmt"
 	"mannemsolutions/pgcustodian/pkg/asymmetric"
 	passwordGen "mannemsolutions/pgcustodian/pkg/pwgen"
 	"os"
@@ -23,14 +22,10 @@ const (
 )
 
 func TestPrivateKey(t *testing.T) {
-	tmpDir, err := os.MkdirTemp("", "Generate")
-	if err != nil {
-		panic(fmt.Errorf("unable to create temp dir: %w", err))
-	}
-	defer os.RemoveAll(tmpDir)
+	tmpDir := t.TempDir()
 
 	folderWithNoPermissions := path.Join(tmpDir, "noperms")
-	err = os.Mkdir(folderWithNoPermissions, 0o000)
+	err := os.Mkdir(folderWithNoPermissions, 0o000)
 	require.NoError(t, err)
 
 	privateFile := path.Join(tmpDir, privateKeyFileName)
@@ -89,14 +84,10 @@ func TestPrivateKey(t *testing.T) {
 
 func TestEncryptDecryptFile(t *testing.T) {
 
-	tmpDir, err := os.MkdirTemp("", "encrypt_decrypt")
-	if err != nil {
-		panic(fmt.Errorf("unable to create temp dir: %w", err))
-	}
-	defer os.RemoveAll(tmpDir)
+	tmpDir := t.TempDir()
 
 	folderWithNoPermissions := path.Join(tmpDir, "noperms")
-	err = os.Mkdir(folderWithNoPermissions, 0o000)
+	err := os.Mkdir(folderWithNoPermissions, 0o000)
 	require.NoError(t, err)
 
 	privateFile := path.Join(tmpDir, privateKeyFileName)

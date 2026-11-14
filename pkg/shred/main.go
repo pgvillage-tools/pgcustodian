@@ -108,13 +108,17 @@ func (conf Conf) file(filePath string) error {
 	return nil
 }
 
-func overwriteFile(filePath string, random bool) error {
+func overwriteFile(filePath string, random bool) (err error) {
 	f, err := os.OpenFile(filePath, os.O_WRONLY, 0)
 	if err != nil {
 		return err
 	}
 
-	defer f.Close()
+	defer func() {
+		if cErr := f.Close(); err == nil {
+			err = cErr
+		}
+	}()
 
 	info, err := f.Stat()
 	if err != nil {

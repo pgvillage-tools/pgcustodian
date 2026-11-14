@@ -26,9 +26,10 @@ const (
 
 // Default path of the kv store
 func DefaultStore(version uint8) string {
-	if version == 1 {
+	switch version {
+	case 1:
 		return "kv"
-	} else if version == 2 {
+	case 2:
 		return "secret"
 	}
 	return DefaultStore(DefaultStoreVersion)

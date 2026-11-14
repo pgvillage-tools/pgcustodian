@@ -1,13 +1,2 @@
-# golangci-lint v2 configuration. The repository had no configuration, so CI used the v1 defaults; this keeps the
-# same set of checks with v2 (v2 dropped the default exclusions and merged gosimple and stylecheck into staticcheck).
+# golangci-lint v2 with its default linters and checks.
 version: '2'
-
-linters:
-  exclusions:
-    presets:
-      # The v1 default exclusion for unchecked errors of Close, Flush, os.Remove(All), os.Setenv, etc.
-      - std-error-handling
-  settings:
-    staticcheck:
-      # staticcheck (SA) and gosimple (S1), the v1 default linters; not stylecheck (ST) and quickfix (QF)
-      checks: ['SA*', 'S1*']
