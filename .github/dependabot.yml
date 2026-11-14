@@ -3,35 +3,21 @@
 
 version: 2
 updates:
-  - package-ecosystem: "gomod"
-    directory: "/"
-    schedule:
-      interval: "weekly"
+  - package-ecosystem: 'gomod'
+    directory: '/'
     commit-message:
-      prefix: "fix"
-      prefix-development: "chore"
-      include: "scope"
-  - package-ecosystem: "github-actions"
-    directory: "/"
+      prefix: 'chore(dependabot-go): '
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     commit-message:
-      prefix: "fix"
-      prefix-development: "chore"
-      include: "scope"
-  - package-ecosystem: "pip"
-    directory: "/"
+      prefix: 'chore(dependabot-github-actions): '
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
+  - package-ecosystem: 'docker'
+    directory: '/'
     commit-message:
-      prefix: "fix"
-      prefix-development: "chore"
-      include: "scope"
-  - package-ecosystem: "docker"
-    directory: "/"
+      prefix: 'chore(dependabot-docker): '
     schedule:
-      interval: "weekly"
-    commit-message:
-      prefix: "fix"
-      prefix-development: "chore"
-      include: "scope"
+      interval: 'weekly'
