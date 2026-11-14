@@ -1,0 +1,2 @@
+# golangci-lint v2 with its default linters and checks.
+version: '2'
