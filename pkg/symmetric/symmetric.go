@@ -5,7 +5,6 @@ package symmetric
  */
 import (
 	"bufio"
-	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
@@ -105,24 +104,34 @@ func StreamDecrypt(key []byte, input *bufio.Reader, output *bufio.Writer) (int64
 	}
 }
 
+// Cycle decrypts inFile with oldKey and encrypts the result with newKey into outFile. The decrypted data is streamed
+// through a pipe, so it is never written to disk and both sides run at the same time.
 func Cycle(oldKey []byte, inFile string, newKey []byte, outFile string) error {
-	buffer := bytes.NewBuffer([]byte{})
+	pipeReader, pipeWriter := io.Pipe()
 	type returnValues struct {
 		count int64
 		err   error
 	}
-	c := make(chan returnValues)
+	c := make(chan returnValues, 1)
 
 	go func() {
-		count, err := EncryptToFile(newKey, bufio.NewReader(buffer), outFile)
+		count, err := EncryptToFile(newKey, bufio.NewReader(pipeReader), outFile)
+		// When encrypting fails, this makes the decrypting side stop writing instead of blocking forever
+		_ = pipeReader.CloseWithError(err)
 		c <- returnValues{count, err}
 	}()
 
-	count, err := DecryptFromFile(oldKey, inFile, bufio.NewWriter(buffer))
+	writer := bufio.NewWriter(pipeWriter)
+	count, err := DecryptFromFile(oldKey, inFile, writer)
+	if err == nil {
+		err = writer.Flush()
+	}
+	// With a nil error, the encrypting side reads EOF after the last byte
+	_ = pipeWriter.CloseWithError(err)
+	encryptResults := <-c
 	if err != nil {
 		return fmt.Errorf("error while decrypting: %w", err)
 	}
-	encryptResults := <-c
 	if encryptResults.err != nil {
 		return fmt.Errorf("error while encrypting: %w", encryptResults.err)
 	}

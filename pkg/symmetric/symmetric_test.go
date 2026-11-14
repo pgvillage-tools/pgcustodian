@@ -21,6 +21,10 @@ func TestPasswordToKey(t *testing.T) {
 		keyEnum := keySize.ToAESKeyEnum()
 		for _, pwSize := range []uint{1, 16, 255} {
 			password := passwordGen.RandomPassword(pwSize, passwordGen.AllBytes)
+			// Three random 1 character passwords are equal now and then (about 3% of the runs)
+			for passwords[password] {
+				password = passwordGen.RandomPassword(pwSize, passwordGen.AllBytes)
+			}
 			passwords[password] = true
 			key := symmetric.PasswordToKey(password, keySize)
 			keys[string(key)] = true
