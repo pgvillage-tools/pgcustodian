@@ -32,7 +32,7 @@ builds:
     main: ./cmd/pgcustodian
     binary: pgcustodian
     ldflags:
-      - -s -w -X "internal.appVersion={{.Version}}"
+      - -s -w -X "github.com/pgvillage-tools/pgcustodian/internal.appVersion=v{{.Version}}"
 
 archives:
   - format: tar.gz

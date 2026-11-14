@@ -1,7 +1,7 @@
 package main
 
 import (
-	"mannemsolutions/pgcustodian/pkg/asymmetric"
+	"github.com/pgvillage-tools/pgcustodian/pkg/asymmetric"
 	"os"
 
 	"github.com/spf13/cobra"

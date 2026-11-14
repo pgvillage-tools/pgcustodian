@@ -2,8 +2,8 @@ package asymmetric_test
 
 import (
 	"crypto/rsa"
-	"mannemsolutions/pgcustodian/pkg/asymmetric"
-	passwordGen "mannemsolutions/pgcustodian/pkg/pwgen"
+	"github.com/pgvillage-tools/pgcustodian/pkg/asymmetric"
+	passwordGen "github.com/pgvillage-tools/pgcustodian/pkg/pwgen"
 	"os"
 	"path"
 	"strings"

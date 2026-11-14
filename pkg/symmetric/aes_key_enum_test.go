@@ -1,7 +1,7 @@
 package symmetric_test
 
 import (
-	crypt "mannemsolutions/pgcustodian/pkg/symmetric"
+	crypt "github.com/pgvillage-tools/pgcustodian/pkg/symmetric"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

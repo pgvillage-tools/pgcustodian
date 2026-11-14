@@ -2,7 +2,7 @@ package utils_test
 
 import (
 	"fmt"
-	"mannemsolutions/pgcustodian/pkg/utils"
+	"github.com/pgvillage-tools/pgcustodian/pkg/utils"
 	"os"
 	"path/filepath"
 	"testing"

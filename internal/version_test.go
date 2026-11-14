@@ -1,7 +1,7 @@
 package internal_test
 
 import (
-	"mannemsolutions/pgcustodian/internal"
+	"github.com/pgvillage-tools/pgcustodian/internal"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

@@ -1,7 +1,7 @@
 package passwordGen_test
 
 import (
-	passwordGen "mannemsolutions/pgcustodian/pkg/pwgen"
+	passwordGen "github.com/pgvillage-tools/pgcustodian/pkg/pwgen"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

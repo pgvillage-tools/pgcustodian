@@ -2,7 +2,7 @@ package shred_test
 
 import (
 	"fmt"
-	"mannemsolutions/pgcustodian/pkg/shred"
+	"github.com/pgvillage-tools/pgcustodian/pkg/shred"
 	"os"
 	"path"
 	"path/filepath"

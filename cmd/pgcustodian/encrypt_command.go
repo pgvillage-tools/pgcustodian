@@ -2,9 +2,9 @@ package main
 
 import (
 	"bufio"
-	"mannemsolutions/pgcustodian/pkg/asymmetric"
-	passwordGen "mannemsolutions/pgcustodian/pkg/pwgen"
-	"mannemsolutions/pgcustodian/pkg/symmetric"
+	"github.com/pgvillage-tools/pgcustodian/pkg/asymmetric"
+	passwordGen "github.com/pgvillage-tools/pgcustodian/pkg/pwgen"
+	"github.com/pgvillage-tools/pgcustodian/pkg/symmetric"
 	"os"
 
 	"github.com/spf13/cobra"
